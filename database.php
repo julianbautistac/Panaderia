@@ -2,7 +2,8 @@
 
 $server = 'localhost';
 $username = 'root';
-$password = 'arath123';
+
+$password = '';
 $database = 'panaderia';
 
 try {

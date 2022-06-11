@@ -37,9 +37,18 @@
     <span>or <a href="login.php">Login</a></span>
 
     <form action="signup.php" method="POST">
+
+
+
       <input name="usuario" type="text" placeholder="Ingresa un usuario">
       <input name="password" type="text" placeholder="Enter your Password">
       <input name="confirm_password" type="password" placeholder="Confirm Password">
+      <select name="Tipo de usuario" id="Tipo">
+      <optgroup label="Tipo">
+        <option value="Administrador">Administrador</option>
+        <option value="Auxiliar">Auxiliar</option>
+      </optgroup>
+      </select>
       <input type="submit" value="Submit">
     </form>
 
