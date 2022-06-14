@@ -1,43 +1,36 @@
 <?php
 
-  session_start();
+session_start();
 
-  if (isset($_SESSION['usuario_id'])) {
-    header('Location: /proyecto');
+if (isset($_SESSION['usuario_id'])) {
+  header('Location: index.php');
+}
+require 'database.php';
+
+
+
+if (!empty($_POST['usuario']) && !empty($_POST['password'])) {
+  $records = $conn->prepare('SELECT id_usuario, usuario, password FROM usuarios WHERE usuario = :usuario');
+  $records->bindParam(':usuario', $_POST['usuario']);
+  $records->execute();
+  $results = $records->fetch(PDO::FETCH_ASSOC);
+
+  $message = ''; 
+
+  if (count($results) > 0 && ($_POST['password'] == $results['password']) ) {
+    $_SESSION['usuario_id'] = $results['id_usuario'];
+    header("Location: index.php");
   }
-  require 'database.php';
-
- 
-
-  if (!empty($_POST['usuario']) && !empty($_POST['password'])) {
-    $records = $conn->prepare('SELECT id_usuario, usuario, password FROM usuarios WHERE usuario = :usuario');
-    $records->bindParam(':usuario', $_POST['usuario']);
-    $records->execute();
-    $results = $records->fetch(PDO::FETCH_ASSOC);
-
-    $message = ''; 
-
-
- 
-
-    if (count($results) > 0 && ($_POST['password'] == $results['password']) ) {
-      $_SESSION['usuario_id'] = $results['id_usuario'];
-      header("Location: /proyecto");
-    }
-    else {
-      $message = 'No coinciden contraseña y password';
-    }
-
+  else {
+    $message = 'No coinciden contraseña y password';
   }
 
-  
-
-
-
-
-
+}
 
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html>
@@ -59,7 +52,7 @@
 
     <form action="login.php" method="POST">
       <input name="usuario" type="text" placeholder="Ingresa tu usuario">
-      <input name="password" type="text" placeholder="ingresa tu contraseña">
+      <input name="password" type="password" placeholder="ingresa tu contraseña">
       <input type="submit" value="Submit">
     </form>
   </body>
