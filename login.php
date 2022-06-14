@@ -3,7 +3,7 @@
 session_start();
 
 if (isset($_SESSION['usuario_id'])) {
-  header('Location: index.php');
+  header('Location: index.php');//// si esta iniciada la sesion, nos lleva al index si no, nos lleva al login
 }
 require 'database.php';
 
@@ -19,7 +19,7 @@ if (!empty($_POST['usuario']) && !empty($_POST['password'])) {
 
   if (count($results) > 0 && ($_POST['password'] == $results['password']) ) {
     $_SESSION['usuario_id'] = $results['id_usuario'];
-    header("Location: index.php");
+    header("Location: index.php"); // una vez iniciada la sesion nos lleva al index
   }
   else {
     $message = 'No coinciden contraseña y password';
